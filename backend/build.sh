@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 echo "🔧 Running Prisma generate..."
 npx prisma generate
 
