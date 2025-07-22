@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/main.js",
   "scripts": {
-    "build": "bash backend/build.sh",
+    "build": "C:\\ATB-local-testing-dev\\backend\\build.sh",
     "start": "node dist/main.js",
     "start:dev": "nest start --watch",
     "migrate": "prisma migrate deploy",
