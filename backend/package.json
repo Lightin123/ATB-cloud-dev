@@ -1,7 +1,6 @@
 {
   "name": "atb-backend",
   "version": "1.0.0",
-  "type": "module",
   "main": "dist/main.js",
   "scripts": {
     "build": "nest build",
