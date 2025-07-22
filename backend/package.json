@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "dist/main.js",
   "scripts": {
-    "prisma:setup": "npx prisma generate && npx prisma db push --schema=backend/prisma/schema.prisma",
-    "build": "npm run prisma:setup && nest build",
+    "build": "bash ./build.sh",
     "start": "node dist/main.js",
     "start:dev": "nest start --watch",
-    "migrate": "npx prisma migrate deploy",
-    "seed": "node prisma/seed.js"
+    "migrate": "prisma migrate deploy",
+    "seed": "node prisma/seed.js",
+    "prisma:setup": "npx prisma generate && npx prisma db push --schema=backend/prisma/schema.prisma"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.5",
