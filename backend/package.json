@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "dist/main.js",
   "scripts": {
-    "build": "npx prisma generate && npx prisma db push --schema=backend/prisma/schema.prisma && nest build",
+    "prisma:setup": "npx prisma generate && npx prisma db push --schema=backend/prisma/schema.prisma",
+    "build": "npm run prisma:setup && nest build",
     "start": "node dist/main.js",
     "start:dev": "nest start --watch",
     "migrate": "npx prisma migrate deploy",
