@@ -8,7 +8,7 @@ import {
     PreferencesOnRealEstate,
     RealEstateType,
     UserRole,
-} from "../../../types/prisma-types.ts";
+} from "C:\\ATB-local-testing-dev\\frontend\\types\\prisma-types.ts";
 
 export class LeasePaymentSchedule {
     id: number;

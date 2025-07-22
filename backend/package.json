@@ -9,6 +9,9 @@
     "seed": "node prisma/seed.js"
   },
   "dependencies": {
+    "@nestjs/common": "^11.1.5",
+    "@nestjs/core": "^11.1.5",
+    "@nestjs/platform-socket.io": "^11.1.5",
     "@prisma/client": "^5.8.1",
     "@sendgrid/mail": "^8.1.5",
     "bcryptjs": "^2.4.3",
@@ -20,7 +23,9 @@
     "multer": "^2.0.1",
     "node-cron": "^3.0.3",
     "nodemailer": "^7.0.3",
+    "reflect-metadata": "^0.2.2",
     "resend": "^3.2.0",
+    "rxjs": "^7.8.2",
     "socket.io": "^4.7.4",
     "xlsx": "^0.18.5",
     "zod": "^4.0.5"
