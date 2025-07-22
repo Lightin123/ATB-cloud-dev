@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { INestApplication } from '@nestjs/common';
-import { AppModule } from './app.module';
 import { ServerOptions } from 'socket.io';
 
 const devOrigin = process.env.DEV_FRONTEND_URL;

@@ -1,17 +1,32 @@
-// src/auth/auth.service.ts
-
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UsersService } from '../users/users.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  login(body: { email: string; password: string }) {
-    const { email, password } = body;
+  constructor(private readonly usersService: UsersService) {}
 
-    // Dummy logic — replace this with your real login logic
-    if (email === 'admin@example.com' && password === '1234') {
-      return { message: 'Login successful', token: 'jwt_token_here' };
+  async login(body: { email: string; password: string }) {
+    const { email, password } = body;
+    console.log('📨 Login request:', email);
+
+    const user = await this.usersService.findByEmail(email);
+    console.log('🔎 User found:', user);
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
     }
 
-    return { message: 'Invalid credentials' };
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log('🔐 Password match:', isMatch);
+
+    if (!isMatch) {
+      throw new UnauthorizedException('Wrong password');
+    }
+
+    return {
+      message: 'Login successful',
+      user: { id: user.id, email: user.email },
+    };
   }
 }

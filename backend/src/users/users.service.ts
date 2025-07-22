@@ -6,9 +6,9 @@ export class UsersService {
     {
       id: 1,
       email: 'test@example.com',
-      // bcrypt hash for "123456"
+      // bcrypt hash for password '123456'
       password: '$2b$10$TG44P1/F3MYwA9ZsL1bKz.rSnE7DquNfA9q9uq8nlUs2c6sJdCqzS',
-    },
+    }
   ];
 
   async findByEmail(email: string) {
