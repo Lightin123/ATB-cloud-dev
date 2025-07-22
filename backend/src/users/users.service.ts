@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'C:\\ATB-local-testing-dev\\backend\\src\\prisma.service'; // adjust the path if needed
-
+import { PrismaService } from '../prisma.service';
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
