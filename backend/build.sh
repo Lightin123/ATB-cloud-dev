@@ -1,12 +1,10 @@
 #!/bin/bash
 
-set -e
-
 echo "🔧 Running Prisma generate..."
-npx prisma generate
+node_modules/.bin/prisma generate --schema=prisma/schema.prisma
 
 echo "📤 Pushing Prisma DB schema..."
-npx prisma db push --schema=backend/prisma/schema.prisma
+node_modules/.bin/prisma db push --schema=prisma/schema.prisma
 
 echo "🏗 Building NestJS..."
 npm run build:nest
