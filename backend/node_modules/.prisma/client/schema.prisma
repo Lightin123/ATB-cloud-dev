@@ -17,6 +17,7 @@ enum UserRole {
   OWNER
   ADMIN
   GUEST
+  REALTOR
 }
 
 // Define the AccountStatus enum to track the online status of a user.
