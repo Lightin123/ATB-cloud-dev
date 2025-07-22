@@ -12,6 +12,7 @@
   "dependencies": {
     "@nestjs/common": "^11.1.5",
     "@nestjs/core": "^11.1.5",
+    "@nestjs/platform-express": "^11.1.5",
     "@nestjs/platform-socket.io": "^11.1.5",
     "@prisma/client": "^5.8.1",
     "@sendgrid/mail": "^8.1.5",
