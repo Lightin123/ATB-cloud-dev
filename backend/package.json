@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/main.js",
   "scripts": {
-    "build": "bash build.sh",
+    "build": "bash build-run.sh",
     "build:nest": "nest build",
     "start": "node dist/main.js",
     "start:dev": "nest start --watch",
@@ -11,7 +11,6 @@
     "seed": "node prisma/seed.js"
   },
   "dependencies": {
-    "@nestjs/cli": "^10.3.0",
     "@nestjs/common": "^11.1.5",
     "@nestjs/core": "^11.1.5",
     "@nestjs/platform-express": "^11.1.5",
@@ -38,6 +37,7 @@
     "prisma": "^5.8.1"
   },
   "devDependencies": {
+    "@nestjs/cli": "^10.3.0",
     "@types/bcrypt": "^6.0.0",
     "typescript": "^5.4.3"
   }
