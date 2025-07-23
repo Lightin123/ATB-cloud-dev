@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "dist/main.js",
 "scripts": {
+  "postinstall": "chmod +x ./node_modules/.bin/prisma",
   "build": "prisma generate --schema=prisma/schema.prisma && prisma db push --schema=prisma/schema.prisma && nest build",
   "start": "node dist/main.js",
   "start:dev": "nest start --watch",
