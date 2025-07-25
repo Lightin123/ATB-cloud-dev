@@ -90,7 +90,7 @@ const items = [
 const Navbar = ({children}) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const authSlice = useSelector(state => state.authSlice);
+    const authSlice = useSelector(state => state.auth);
     const userRole = authSlice.userInfo?.role;
 
     const {isLoading: userIsLoading} = useGetUserQuery();
@@ -103,7 +103,7 @@ const Navbar = ({children}) => {
     const prefetchLeases = usePrefetch("getLeases")
     const prefetchPayments = usePrefetch("getPayments")
     const prefetchMessages = usePrefetch("getMessages")
-    const prefetchMaintenance = usePrefetch("getMaintenanceReports")
+    const prefetchMaintenance = usePrefetch("getMaintenance")
     const prefetchExpenses = usePrefetch("getExpenses")
 
     prefetchUser();

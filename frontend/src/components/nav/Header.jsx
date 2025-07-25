@@ -16,7 +16,7 @@ import {useNavigate} from "react-router-dom";
 import PropertySelection from "./PropertySelection.jsx";
 
 const Header = () => {
-    const userProfile = useSelector(state => state.authSlice.userInfo)
+    const userProfile = useSelector(state => state.auth.userInfo)
     const navigate = useNavigate();
 
     return (

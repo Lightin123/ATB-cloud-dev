@@ -133,7 +133,10 @@ const columns: ColumnDef<Lease>[] = [
                 )
             }
         },
-        accessorFn: (row) => (row?.tenant?.firstName + " " + row?.tenant?.lastName) || "",
+        accessorFn: (row) => {
+  const tenant = row?.tenant as { firstName?: string; lastName?: string };
+  return (tenant?.firstName + " " + tenant?.lastName) || "";
+},
         meta: {
             type: "string",
         },

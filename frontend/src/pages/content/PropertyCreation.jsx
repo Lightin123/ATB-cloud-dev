@@ -42,7 +42,7 @@ import {Progress} from "../../components/ui/multi-step.jsx";
 const PropertyCreation = () => {
 
     const navigate = useNavigate();
-    const userRole = useSelector(state => state.authSlice.userInfo?.role);
+    const userRole = useSelector(state => state.auth.userInfo?.role);
 
     if (userRole !== 'ADMIN') return <Navigate to="/unauthorized" />;
 

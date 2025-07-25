@@ -635,3 +635,38 @@ export const selectUnitsByLeaseIds = createSelector(
         return units.filter(unit => leaseIds.includes(unit?.leases[0]?.id) && unit?.leases[0]?.id !== undefined);
     }
 )
+// ✅ Curried selector - dynamic, compatible with useSelector()
+export const makeSelectObjectById = (id, type) =>
+  createSelector(
+    [
+      selectAllProperties,
+      selectAllUnits,
+      selectAllLeases,
+      selectAllTenants,
+      selectAllPayments,
+      selectAllMaintenanceReports
+    ],
+    (properties, units, leases, tenants, payments, maintenanceReports) => {
+      try {
+        if (!id) return null;
+        switch (type) {
+          case 'property':
+            return properties.find(property => property.id === id);
+          case 'unit':
+            return units.find(unit => unit.id === id);
+          case 'lease':
+            return leases.find(lease => lease.id === id);
+          case 'tenant':
+            return tenants.find(tenant => tenant.id === id);
+          case 'payment':
+            return payments.find(payment => payment.id === id);
+          case 'maintenanceReport':
+            return maintenanceReports.find(m => m.id === id);
+          default:
+            return null;
+        }
+      } catch (e) {
+        return null;
+      }
+    }
+  );

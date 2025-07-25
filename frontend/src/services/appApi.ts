@@ -1042,6 +1042,15 @@ export const appApi = createApi({
       },
       invalidatesTags: ['User'],
     }),
+    updateExpense: build.mutation({
+  query: ({ id, ...rest }) => ({
+    url: `/expenses/${id}`,
+    method: 'PUT', // or PATCH depending on your backend
+    body: rest,
+  }),
+  invalidatesTags: ['Expenses'],
+}),
+
     deleteUser: build.mutation<any, any>({
       query: () => ({
         url: '/api/user',
@@ -1052,6 +1061,14 @@ export const appApi = createApi({
         logoutUser();
       },
     }),
+  deleteUserById: build.mutation<void, number>({
+  query: (id) => ({
+    url: `/users/${id}`,
+    method: "DELETE",
+  }),
+  invalidatesTags: ["User"],
+}),
+
   }),
 });
 
@@ -1059,20 +1076,19 @@ export const {
   useLoginMutation,
   useRefreshQuery,
   useGetUserQuery,
-  usePrefetch,
   useGetUnitsQuery,
-  useGetUnitQuery,
   useAssignTenantMutation,
   useGetLeasesQuery,
   useCreateLeaseMutation,
   useGetTenantsQuery,
-  useGetTenantQuery,
   useGetMaintenanceQuery,
   useGetPaymentsQuery,
   useGetExpensesQuery,
   useGetPropertiesQuery,
-  useGetPropertyQuery,
   useGetAdminPropertiesQuery,
+  useGetPropertyQuery,
+  useGetUnitQuery,
+  useGetTenantQuery,
   useGenerateOverwriteCodeMutation,
   useRegisterMutation,
   useLogoutMutation,
@@ -1107,7 +1123,9 @@ export const {
   useDeleteTenantMutation,
   useCreateUnitMutation,
   useUpdateUnitMutation,
-  useDeleteUnitMutation,
+  usePrefetch,
   useUpdateUserMutation,
-  useDeleteUserMutation,
+  useDeleteUserByIdMutation, 
 } = appApi;
+
+export default appApi;

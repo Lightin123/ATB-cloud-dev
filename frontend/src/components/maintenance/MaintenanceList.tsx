@@ -87,19 +87,20 @@ export default function MaintenanceList({ unitId, onEdit, onDelete }: Props) {
         enableGlobalFilter: true,
         filterFn: 'includesString',
       },
-      {
-        id: 'owner',
-        header: 'Owner',
-        accessorFn: (report: any) => {
-          const owners = report.unit?.owners || [];
-          return owners.map((o: any) => `${o.firstName} ${o.lastName}`).join(', ');
-        },
-        cell: ({ row }) => {
-          const owners: any[] = (row.original as any).unit?.owners || [];
-          return owners.map(o => `${o.firstName} ${o.lastName}`).join(', ');
-        },
-        enableSorting: false,
-      },
+{
+  id: 'owner',
+  header: 'Owner',
+  accessorFn: (report: any) => {
+    const owners = (report.unit as any)?.owners || [];
+    return owners.map((o: any) => `${o.firstName} ${o.lastName}`).join(', ');
+  },
+  cell: ({ row }) => {
+    const owners: any[] = (row.original as any).unit?.owners || [];
+    return owners.map(o => `${o.firstName} ${o.lastName}`).join(', ');
+  },
+  enableSorting: false,
+},
+
       {
         id: 'tenant',
         header: 'Tenant',

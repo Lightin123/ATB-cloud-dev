@@ -15,7 +15,7 @@ const PropertySelection = () => {
 
     const dispatch = useDispatch();
 
-    const selection = useSelector(state => state.userSlice.selectedProperty);
+    const selection = useSelector(state => state.user.selectedProperty);
 
     // Will be null if no property (all) is selected
     const property = useSelector(state => selectPropertyById(state, selection));

@@ -9,7 +9,7 @@ import { Button } from '../components/ui/button.tsx';
 import { useCreatePropertyMutation, useGetOwnersQuery, useGetTenantsQuery } from '../services/appApi';
 
 export default function NewProperty() {
-  const role = useSelector(state => state.authSlice.userInfo?.role);
+  const role = useSelector(state => state.auth.userInfo?.role);
   const navigate = useNavigate();
   const { data: ownersData } = useGetOwnersQuery();
   const { data: tenantsData } = useGetTenantsQuery();

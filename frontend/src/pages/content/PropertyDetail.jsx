@@ -11,7 +11,7 @@ const PropertyDetail = (props) => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const userRole = useSelector(state => state.authSlice.userInfo?.role);
+    const userRole = useSelector(state => state.auth.userInfo?.role);
 
     const [deleteProperty, {isLoading: isDeleting}] = useDeletePropertyMutation();
 

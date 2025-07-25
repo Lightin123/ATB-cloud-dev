@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import styles from './AdminUpload.module.css';
 
 const AdminUpload = () => {
-  const role = useSelector(state => state.authSlice.userInfo?.role);
+  const role = useSelector(state => state.auth.userInfo?.role);
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
 

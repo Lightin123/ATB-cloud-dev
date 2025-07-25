@@ -15,7 +15,7 @@ const Properties = (props) => {
     const navigate = useNavigate()
 
     const properties = useSelector(state => selectPropertiesByPropertyId(state, propertySelection));
-    const userRole = useSelector(state => state.authSlice.userInfo?.role)
+    const userRole = useSelector(state => state.auth.userInfo?.role)
 
     const ViewSelection = () => {
         return (

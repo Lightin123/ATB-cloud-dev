@@ -8,7 +8,7 @@ import { Button } from '../components/ui/button.tsx';
 import { Checkbox } from '../components/ui/checkbox.tsx';
 
 export default function AdminDashboard() {
-  const user = useSelector(state => state.authSlice.userInfo);
+  const user = useSelector(state => state.auth.userInfo);
   const { data, isLoading, error } = useGetAdminPropertiesQuery(user?.userId);
   const [openId, setOpenId] = useState(null);
   const [selectedUnits, setSelectedUnits] = useState([]);

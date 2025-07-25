@@ -13,7 +13,7 @@ const parseJwt = (token) => {
 };
 
 const AuthVerify = () => {
-    const state = useSelector((state) => state.authSlice);
+    const state = useSelector((state) => state.auth);
     const accessToken = state.accessToken;
     const dispatch = useDispatch();
     const refreshToken = localStorage.getItem("refreshToken")

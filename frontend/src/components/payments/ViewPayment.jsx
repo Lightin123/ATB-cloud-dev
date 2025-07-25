@@ -16,7 +16,7 @@ import {cn} from "../../utils.ts";
 
 const ViewPayment = ({payment, open, setOpen, ...props}) => {
 
-    const userData = useSelector(state => state.authSlice.userInfo)
+    const userData = useSelector(state => state.auth.userInfo)
 
     const lease = useSelector(state => selectLeaseById(state, payment?.leaseId))
 

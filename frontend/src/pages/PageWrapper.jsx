@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 
 
 const PageWrapper = (props) => {
-    const propertySelection = useSelector((state) => state.userSlice.selectedProperty)
+    const propertySelection = useSelector((state) => state.user.selectedProperty)
 
     if (!props?.query) { return props?.children || null}
 

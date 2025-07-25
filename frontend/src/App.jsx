@@ -40,7 +40,7 @@ import { ThemeProvider } from './services/contexts/ThemeContext.tsx';
 
 // --- Route guard for landing vs. app ---
 const LandingRoute = () => {
-  const isLoggedIn = useSelector(state => !!state.authSlice.accessToken);
+  const isLoggedIn = useSelector(state => !!state.auth.accessToken);
   return isLoggedIn ? <Navigate to="/home" replace /> : <LandingPage />;
 };
 
@@ -58,7 +58,7 @@ function App() {
 }
 
 const AppContent = () => {
-  const token = useSelector(state => state.authSlice.accessToken);
+  const token = useSelector(state => state.auth.accessToken);
   const isLoggedIn = !!token;
   const socket = useSocket();
 
