@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     selectedProperty: "all",
-    user: null,
 }
 
 const userSlice = createSlice({
@@ -12,14 +11,11 @@ const userSlice = createSlice({
         selectProperty: (state, action) => {
             state.selectedProperty = action.payload
         },
-        setUser: (state, action) => {
-            state.user = action.payload
-        },
     },
 })
 
 
 
-export const { selectProperty, setUser } = userSlice.actions
+export const { selectProperty } = userSlice.actions
 export default userSlice.reducer
 

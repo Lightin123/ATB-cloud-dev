@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NotFound from './pages/NotFound.jsx';
 import LandingPage from './pages/LandingPage.jsx';
-import AuthVerify from './services/auth/AuthVerify';
+import AuthVerify from './services/auth/AuthVerify.js';
 import LoginCard from './components/auth/LoginCard.jsx';
 import { Provider, useSelector } from 'react-redux';
-import { store } from './services/store/store';
+import { store } from './services/store/store.js';
 import SignUpCard from './components/auth/SignUpCard.tsx';
 import NavBar from './components/NavBar.jsx';
 import { TooltipProvider } from './components/ui/tooltip.tsx';
@@ -34,13 +34,13 @@ import Services from './pages/Services.jsx';
 import AdminUpload from './pages/AdminUpload.jsx';
 import AdminMaintenance from './pages/AdminMaintenance.jsx';
 import ServiceRequests from './pages/ServiceRequests.tsx';
-import { useSocket } from './services/hooks/useSocket';
-import SocketContext from './services/contexts/SocketContext';
+import { useSocket } from './services/hooks/useSocket.js';
+import SocketContext from './services/contexts/SocketContext.js';
 import { ThemeProvider } from './services/contexts/ThemeContext.tsx';
 
 // --- Route guard for landing vs. app ---
 const LandingRoute = () => {
-  const isLoggedIn = useSelector(state => !!state.auth.accessToken);
+  const isLoggedIn = useSelector(state => !!state.authSlice.accessToken);
   return isLoggedIn ? <Navigate to="/home" replace /> : <LandingPage />;
 };
 
@@ -58,7 +58,7 @@ function App() {
 }
 
 const AppContent = () => {
-  const token = useSelector(state => state.auth.accessToken);
+  const token = useSelector(state => state.authSlice.accessToken);
   const isLoggedIn = !!token;
   const socket = useSocket();
 

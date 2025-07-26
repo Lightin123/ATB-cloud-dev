@@ -7,12 +7,12 @@ import {Input} from "../ui/input.tsx";
 import {Button} from "../ui/button.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 import {Textarea} from "../ui/textarea.tsx";
-import {useUpdateUserMutation} from "../../services/appApi";
+import {useUpdateUserMutation} from "../../services/api/userApi.js";
 import {useEffect, useState} from "react";
 import ProfileCard from "./ProfileCard.jsx";
-import {dateParser, zodStringPipe} from "../../utils/formatters";
-import {userSchema} from "../../utils/formSchemas";
-import {RealEstateType} from "../../utils/magicNumbers.jsx";
+import {dateParser, zodStringPipe} from "../../utils/formatters.js";
+import {userSchema} from "../../utils/formSchemas.js";
+import {RealEstateType} from "../../utils/magicNumbers.js";
 
 const titles = ['-','Mr', 'Mrs', 'Ms', 'Dr', 'Prof'];
 
@@ -28,20 +28,20 @@ const EditProfile = ({user}) => {
     const profileForm = useForm({
         resolver: zodResolver(userSchema),
         defaultValues: {
-            firstName: user?.firstName,
-            lastName: user?.lastName,
-            email: user?.email,
-            title: user?.title,
-            website: user?.website,
-            bio: user?.bio,
-            phone: user?.phone,
-            dob: user?.dob,
-            company: user?.company,
-            street: user?.street,
-            city: user?.city,
-            state: user?.state,
-            zip: user?.zip,
-            country: user?.country,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            title: user.title,
+            website: user.website,
+            bio: user.bio,
+            phone: user.phone,
+            dob: user.dob,
+            company: user.company,
+            street: user.street,
+            city: user.city,
+            state: user.state,
+            zip: user.zip,
+            country: user.country,
         },
     })
 

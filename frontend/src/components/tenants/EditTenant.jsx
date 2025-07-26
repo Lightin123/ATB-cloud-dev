@@ -1,7 +1,7 @@
 import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {zodNumberInputPipe, zodStringPipe} from "../../utils/formatters";
+import {zodNumberInputPipe, zodStringPipe} from "../../utils/formatters.js";
 import {
     Form,
     FormControl,
@@ -16,9 +16,9 @@ import {Input} from "../ui/input.tsx";
 import {Button} from "../ui/button.tsx";
 import {useState} from "react";
 import {Save} from "lucide-react";
-import {CivilStatus} from "../../utils/magicNumbers.jsx";
-import {useUpdateTenantMutation} from "../../services/appApi";
-import {tenantSchema} from "../../utils/formSchemas";
+import {CivilStatus} from "../../utils/magicNumbers.js";
+import {useUpdateTenantMutation} from "../../services/api/tenantApi.js";
+import {tenantSchema} from "../../utils/formSchemas.js";
 import {isValidPhoneNumber} from "react-phone-number-input";
 
 const EditTenant = ({tenant}) => {

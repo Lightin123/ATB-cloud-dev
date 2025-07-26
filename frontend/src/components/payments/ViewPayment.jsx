@@ -7,16 +7,16 @@ import {
     DialogTitle,
     DialogTrigger
 } from "../ui/dialog.tsx";
-import {dateParser, moneyParser} from "../../utils/formatters";
+import {dateParser, moneyParser} from "../../utils/formatters.js";
 import {useSelector} from "react-redux";
-import {selectLeaseById} from "../../services/slices/objectSlice";
+import {selectLeaseById} from "../../services/slices/objectSlice.js";
 import {Coins, CalendarClock} from "lucide-react";
 import {cn} from "../../utils.ts";
 
 
 const ViewPayment = ({payment, open, setOpen, ...props}) => {
 
-    const userData = useSelector(state => state.auth.userInfo)
+    const userData = useSelector(state => state.authSlice.userInfo)
 
     const lease = useSelector(state => selectLeaseById(state, payment?.leaseId))
 
@@ -42,7 +42,7 @@ const ViewPayment = ({payment, open, setOpen, ...props}) => {
         },
         {
             label: "Submitted By",
-            value: Number(payment.submittedBy) === userData?.id ? "You" : "Tenant"
+            value: Number(payment.submittedBy) === userData.id ? "You" : "Tenant"
         },
         {
             label: "Submission Date",

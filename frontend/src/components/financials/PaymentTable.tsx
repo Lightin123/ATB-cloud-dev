@@ -1,13 +1,13 @@
 import {
     ColumnDef,
 } from "@tanstack/react-table";
-import {dateParser, moneyParser} from "../../utils/formatters";
+import {dateParser, moneyParser} from "../../utils/formatters.js";
 import {DataTable} from "../ui/data-table.jsx";
 import {LeasePaymentSchedule, RentPayment} from "../../utils/classes.ts";
 import {PaymentStatusBadge} from "../../utils/statusBadges.jsx";
 import {Check, Coins, Eye, MoreHorizontal, Pencil, Trash2} from "lucide-react";
 import ViewPayment from "../payments/ViewPayment.jsx"
-import {PaymentScheduleStatus, PaymentStatus} from "../../utils/magicNumbers.jsx";
+import {PaymentScheduleStatus, PaymentStatus} from "../../utils/magicNumbers.js";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -15,12 +15,7 @@ import {
     DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger,
     DropdownMenuTrigger
 } from "../ui/dropdown-menu.tsx";
-import {
-    useCreatePaymentsMutation,
-    useUpdatePaymentsMutation,
-    useDeletePaymentMutation,
-    useDeletePaymentsMutation
-} from "../../services/appApi";
+import {useDeletePaymentMutation, useUpdatePaymentMutation} from "../../services/api/financialsApi.js";
 import {
     Dialog,
     DialogContent,
@@ -32,7 +27,7 @@ import {
 import {useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {paymentSchema} from "../../utils/formSchemas";
+import {paymentSchema} from "../../utils/formSchemas.js";
 import {Form, FormControl, FormField, FormGroup, FormItem, FormLabel, FormMessage} from "../ui/form.tsx";
 import {Input} from "../ui/input.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
@@ -41,6 +36,11 @@ import Link from "../general/Link.tsx";
 import {Textarea} from "../ui/textarea.tsx";
 import DeleteDialog from "../general/DeleteDialog";
 import {Checkbox} from "../ui/checkbox.tsx";
+import {
+    useCreatePaymentsMutation,
+    useDeletePaymentSchedulesMutation, useDeletePaymentsMutation,
+    useUpdatePaymentSchedulesMutation, useUpdatePaymentsMutation
+} from "../../services/api/bulkApi";
 import {ButtonGroup, ButtonGroupItem} from "../ui/button-group.tsx";
 import {isWithinInterval, subDays} from "date-fns";
 
@@ -51,7 +51,7 @@ const PaymentActions = ({ payment }) => {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
     const [viewModalOpen, setViewModalOpen] = useState(false)
 
-    const [updatePayments, {isLoading: isUpdating}] = useUpdatePaymentsMutation()
+    const [updatePayment, {isLoading: isUpdating}] = useUpdatePaymentMutation()
     const [deletePayment] = useDeletePaymentMutation()
 
     const paymentForm = useForm({
@@ -61,13 +61,11 @@ const PaymentActions = ({ payment }) => {
         }
     })
 
-    const handleSubmit = async (data) => {
-        try {
-            await updatePayments({id: payment?.id, body: data}).unwrap()
+    const handleSubmit = (data) => {
+        updatePayment({id: payment?.id, body: data}).then((res) => {
+            if (res.error) return
             setEditModalOpen(false)
-        } catch {
-            // TODO: error handling
-        }
+        })
     }
 
     return (

@@ -1,13 +1,13 @@
 import {
     ColumnDef,
 } from "@tanstack/react-table";
-import {dateParser, moneyParser} from "../../utils/formatters";
+import {dateParser, moneyParser} from "../../utils/formatters.js";
 import {DataTable} from "../ui/data-table.jsx";
 import {Expense, LeasePaymentSchedule, RentPayment} from "../../utils/classes.ts";
 import {PaymentStatusBadge} from "../../utils/statusBadges.jsx";
 import {Check, Coins, ExternalLink, Eye, MoreHorizontal, Pencil, Trash2} from "lucide-react";
 import ViewPayment from "../payments/ViewPayment.jsx"
-import {PaymentScheduleStatus, PaymentStatus} from "../../utils/magicNumbers.jsx";
+import {PaymentScheduleStatus, PaymentStatus} from "../../utils/magicNumbers.js";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -18,8 +18,8 @@ import {
 import {
     useDeleteExpenseMutation,
     useDeletePaymentMutation,
-    useUpdatePaymentsMutation
-} from "../../services/appApi";
+    useUpdatePaymentMutation
+} from "../../services/api/financialsApi.js";
 import {
     Dialog,
     DialogContent,
@@ -31,7 +31,7 @@ import {
 import {useState} from "react";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {paymentSchema} from "../../utils/formSchemas";
+import {paymentSchema} from "../../utils/formSchemas.js";
 import {Form, FormControl, FormField, FormGroup, FormItem, FormLabel, FormMessage} from "../ui/form.tsx";
 import {Input} from "../ui/input.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";

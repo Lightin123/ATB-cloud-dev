@@ -2,15 +2,15 @@ import {
     ColumnDef,
 } from "@tanstack/react-table";
 import {Checkbox} from "../ui/checkbox.tsx";
-import {dateParser, moneyParser} from "../../utils/formatters";
+import {dateParser, moneyParser} from "../../utils/formatters.js";
 import {DataTable} from "../ui/data-table.jsx";
 import {Lease, RentPayment} from "../../utils/classes.ts";
 import {Eye, MoreHorizontal, Pencil, Scroll, Trash2} from "lucide-react";
 import {LeaseStatusBadge} from "../../utils/statusBadges.jsx";
-import {LeaseStatus} from "../../utils/magicNumbers.jsx";
+import {LeaseStatus} from "../../utils/magicNumbers.js";
 import Link from "../general/Link.tsx";
 import {useMemo, useState} from "react";
-import {useDeleteLeaseMutation} from "../../services/appApi";
+import {useDeleteLeaseMutation} from "../../services/api/leaseApi";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -20,9 +20,9 @@ import {
 } from "../ui/dropdown-menu.tsx";
 import EditLease from "../leases/EditLease";
 import DeleteDialog from "../general/DeleteDialog";
-import {useDeleteLeasesMutation, useUpdateLeasesMutation} from "../../services/appApi";
+import {useDeleteLeasesMutation, useUpdateLeasesMutation} from "../../services/api/bulkApi";
 import {Button} from "../ui/button.tsx";
-import ViewLease from "../leases/ViewLease.jsx";
+import ViewLease from "../leases/ViewLease.js";
 import {isWithinInterval, subDays} from "date-fns";
 import {ButtonGroup, ButtonGroupItem} from "../ui/button-group.tsx";
 
@@ -133,10 +133,7 @@ const columns: ColumnDef<Lease>[] = [
                 )
             }
         },
-        accessorFn: (row) => {
-  const tenant = row?.tenant as { firstName?: string; lastName?: string };
-  return (tenant?.firstName + " " + tenant?.lastName) || "";
-},
+        accessorFn: (row) => (row?.tenant?.firstName + " " + row?.tenant?.lastName) || "",
         meta: {
             type: "string",
         },

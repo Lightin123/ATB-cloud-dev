@@ -1,8 +1,11 @@
 import {Card, CardHeader, CardTitle,CardContent,CardDescription} from "../../components/ui/card.tsx";
 import InfoCard from "../../components/home/InfoCard.jsx";
-import {useGetPropertiesQuery, useGetUnitsQuery, useGetTenantsQuery, useGetUserQuery} from "../../services/appApi";
+import {useGetPropertiesQuery} from "../../services/api/propertyApi.ts";
+import {useGetUnitsQuery} from "../../services/api/unitApi.js";
+import {useGetTenantsQuery} from "../../services/api/tenantApi.js";
+import {useGetUserQuery} from "../../services/api/userApi.js";
 import {useSelector} from "react-redux";
-import {selectFutureEvents} from "../../services/slices/eventSlice";
+import {selectFutureEvents} from "../../services/slices/eventSlice.js";
 import {
     Banknote,
     Bell,
@@ -17,9 +20,9 @@ import {
 } from "lucide-react";
 import {Button} from "../../components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
-import {useGetPaymentsQuery} from "../../services/appApi";
+import {useGetPaymentsQuery} from "../../services/api/financialsApi.js";
 import {Avatar, AvatarFallback, AvatarImage} from "../../components/ui/avatar.tsx";
-import {dateParser} from "../../utils/formatters";
+import {dateParser} from "../../utils/formatters.js";
 import {PiHandCoins} from "react-icons/pi";
 import DetailedPropertyTable from "../../components/properties/DetailedPropertyTable.jsx";
 

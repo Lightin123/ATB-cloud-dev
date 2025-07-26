@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import styles from './AdminUpload.module.css';
 
 const AdminUpload = () => {
-  const role = useSelector(state => state.auth.userInfo?.role);
+  const role = useSelector(state => state.authSlice.userInfo?.role);
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
 
@@ -18,7 +18,7 @@ const AdminUpload = () => {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/admin/whitelist/upload`, {
+      const res = await fetch('/admin/whitelist/upload', {
         method: 'POST',
         body: formData,
       });

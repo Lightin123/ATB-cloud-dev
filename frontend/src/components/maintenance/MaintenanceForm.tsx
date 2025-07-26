@@ -1,8 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { maintenanceReportSchema } from '../../utils/formSchemas';
-import { useGetUnitsQuery } from '../../services/appApi';
+import { maintenanceReportSchema } from '../../utils/formSchemas.js';
+import { useGetUnitsQuery } from '../../services/api/unitApi.js';
 import {
   Form,
   FormField,
@@ -15,7 +15,7 @@ import {
 import { Input } from '../ui/input.tsx';
 import { Textarea } from '../ui/textarea.tsx';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select.tsx';
-import { useGetMaintenanceQuery } from '../../services/appApi';
+import { MaintenanceStatus, Priority } from '../../utils/magicNumbers.js';
 import { Button } from '../ui/button.tsx';
 import RentalSelection from '../comboboxes/RentalSelection.jsx';
 import { Checkbox } from '../ui/checkbox.tsx';
@@ -47,7 +47,6 @@ const defaultValues: MaintenanceReport = {
 
 export default function MaintenanceForm({ mode, defaultValues: defs, onSubmit, onCancel }: Props) {
   const { data: units, isLoading: unitsLoading } = useGetUnitsQuery();
-  const { data: meta, isLoading: metaLoading } = useGetMaintenanceQuery(undefined);
 
   const form = useForm<MaintenanceReport>({
     resolver: zodResolver(maintenanceReportSchema),
@@ -59,8 +58,6 @@ export default function MaintenanceForm({ mode, defaultValues: defs, onSubmit, o
   const handleSubmit = (data: MaintenanceReport) => {
     onSubmit(data);
   };
-
-  if (metaLoading) return <div>Loading…</div>;
 
   return (
     <Form {...form}>
@@ -125,12 +122,9 @@ export default function MaintenanceForm({ mode, defaultValues: defs, onSubmit, o
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {meta?.statusOptions.map((status) => (
+                    {Object.keys(MaintenanceStatus).map((status) => (
                       <SelectItem key={status} value={status}>
-                        {status
-                          .replace(/_/g, ' ')
-                          .toLowerCase()
-                          .replace(/\b\w/g, (c) => c.toUpperCase())}
+                        {MaintenanceStatus[status]}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -156,12 +150,9 @@ export default function MaintenanceForm({ mode, defaultValues: defs, onSubmit, o
                     <SelectItem key="none" value="">
                       <div className="h-4" />
                     </SelectItem>
-                    {meta?.priorityOptions.map((p) => (
+                    {Object.keys(Priority).map((p) => (
                       <SelectItem key={p} value={p}>
-                        {p
-                          .replace(/_/g, ' ')
-                          .toLowerCase()
-                          .replace(/\b\w/g, (c) => c.toUpperCase())}
+                        {Priority[p]}
                       </SelectItem>
                     ))}
                   </SelectContent>

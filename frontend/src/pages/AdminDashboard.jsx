@@ -1,21 +1,22 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import { useGetAdminPropertiesQuery, useGenerateOverwriteCodeMutation, useGetPropertyQuery } from '../services/appApi';
-import PropertyCard from '../components/properties/PropertyCard.jsx';
+import { useGetAdminPropertiesQuery, useGenerateOverwriteCodeMutation } from '../services/api/adminApi.js';
+import { useGetPropertyByIdQuery } from '../services/api/propertyApi.ts';
+import PropertyCard from '../components/properties/PropertyCard.js';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../components/ui/dialog.tsx';
 import { Button } from '../components/ui/button.tsx';
 import { Checkbox } from '../components/ui/checkbox.tsx';
 
 export default function AdminDashboard() {
-  const user = useSelector(state => state.auth.userInfo);
+  const user = useSelector(state => state.authSlice.userInfo);
   const { data, isLoading, error } = useGetAdminPropertiesQuery(user?.userId);
   const [openId, setOpenId] = useState(null);
   const [selectedUnits, setSelectedUnits] = useState([]);
   const [allUnits, setAllUnits] = useState(false);
   const [generated, setGenerated] = useState(null);
   const [generateCode] = useGenerateOverwriteCodeMutation();
-  const { data: propDetails } = useGetPropertyQuery(openId, { skip: !openId });
+  const { data: propDetails } = useGetPropertyByIdQuery(openId, { skip: !openId });
 
   async function handleGenerate(e) {
     e.preventDefault();

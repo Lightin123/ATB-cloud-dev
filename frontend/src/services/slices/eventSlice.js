@@ -1,7 +1,7 @@
 import {createEntityAdapter, createSelector, createSlice} from "@reduxjs/toolkit";
-import { appApi } from "../appApi";
+import {authApi} from "../api/authApi.js";
 import {endOfYesterday, isAfter, isBefore} from "date-fns";
-import {moneyParser} from "../../utils/formatters";
+import {moneyParser} from "../../utils/formatters.js";
 
 const eventsAdapter = createEntityAdapter({
     selectId: (event) => event.id,
@@ -9,8 +9,6 @@ const eventsAdapter = createEntityAdapter({
 })
 
 const initialState = eventsAdapter.getInitialState({
-    loading: false,
-    error: null,
 })
 
 
@@ -27,7 +25,7 @@ const eventSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addMatcher(
-            appApi.endpoints.getLeases.matchFulfilled,
+            authApi.endpoints.getLeases.matchFulfilled,
             (state,action) => {
                 const leases = action.payload.data;
 
@@ -62,7 +60,7 @@ const eventSlice = createSlice({
                         })
                     }
                 })
-                eventsAdapter.setAll(state, leaseEvents);
+                eventsAdapter.addMany(state, leaseEvents);
             }
         )
     }

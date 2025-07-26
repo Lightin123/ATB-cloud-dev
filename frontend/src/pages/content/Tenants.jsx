@@ -1,6 +1,6 @@
 import {Button} from "../../components/ui/button.tsx";
 import {Plus, UserRoundPlus} from "lucide-react";
-import {selectTenantsByPropertyId} from "../../services/slices/objectSlice";
+import {selectTenantsByPropertyId} from "../../services/slices/objectSlice.js";
 import {useSelector} from "react-redux";
 import TenantTable from "../../components/tenants/TenantTable.tsx";
 import {useNavigate} from "react-router-dom";

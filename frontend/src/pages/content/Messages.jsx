@@ -1,10 +1,10 @@
 import {Input} from "../../components/ui/input.tsx";
 import React, {useContext, useEffect, useState} from "react";
 import {Button} from "../../components/ui/button.tsx";
-import SocketContext from "../../services/contexts/SocketContext";
-import {useGetUserQuery} from "../../services/appApi";
+import SocketContext from "../../services/contexts/SocketContext.js";
+import {useGetUserQuery} from "../../services/api/userApi.js";
 import {useDispatch, useSelector} from "react-redux";
-import {addMessage, selectGroupedMessages} from "../../services/slices/messageSlice";
+import {addMessage, selectGroupedMessages} from "../../services/slices/messageSlice.js";
 import {
     ChatContainer,
     ChatHeader,
@@ -35,7 +35,7 @@ const Messages = () => {
 
 
     const sendMessage = (type) => {
-        if ((!textContent?.length && type === "text") || (!imageUrl && type === "image") || !receiver || !user?.data?.id) {
+        if ((!textContent?.length && type === "text") || (!imageUrl && type === "image") || !receiver || !user.data?.id) {
             return;
         }
         try{
@@ -66,7 +66,7 @@ const Messages = () => {
                     id: Math.random(),
                     type: message.type,
                     content: message.content,
-                    senderId: user?.data?.id,
+                    senderId: user.data?.id,
                     receiverId: message.receiverId,
                     sender: user?.data,
                     timestamp: new Date().toISOString(),
@@ -100,7 +100,7 @@ const Messages = () => {
                     {Object.keys(messagesByChat).map((chatKey) => {
                         const chat = messagesByChat[chatKey];
 
-                        const otherUser = chat[0].senderId === user?.data?.id ? chat[0].receiver : chat[0].sender;
+                        const otherUser = chat[0].senderId === user.data?.id ? chat[0].receiver : chat[0].sender;
                         return (
                             <ChatListItem
                                 key={chatKey}
@@ -149,13 +149,13 @@ const Messages = () => {
                     <MessageList>
                         {Object.keys(messagesByChat).map((chatKey) => {
                             const chat = messagesByChat[chatKey];
-                            const otherUser = chat[0].senderId === user?.data?.id ? chat[0]?.receiver : chat[0].sender;
+                            const otherUser = chat[0].senderId === user.data?.id ? chat[0]?.receiver : chat[0].sender;
                             if (receiver?.id === otherUser.id) {
                                 return chat.map((message, index) => {
                                     return (
                                         <Message
                                             key={index}
-                                            isSender={message.senderId === user?.data?.id}
+                                            isSender={message.senderId === user.data?.id}
                                             message={message}
                                         />
                                     )

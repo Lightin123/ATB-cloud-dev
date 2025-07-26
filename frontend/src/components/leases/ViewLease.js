@@ -7,15 +7,15 @@ import {
     DialogTitle,
     DialogTrigger
 } from "../ui/dialog.tsx";
-import {dateParser, moneyParser} from "../../utils/formatters";
+import {dateParser, moneyParser} from "../../utils/formatters.js";
 import {useSelector} from "react-redux";
-import {selectLeaseById} from "../../services/slices/objectSlice";
+import {selectLeaseById} from "../../services/slices/objectSlice.js";
 import {Coins, CalendarClock, Scroll} from "lucide-react";
 import {cn} from "../../utils.ts";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "../ui/tabs.tsx";
 import PaymentTable from "../financials/PaymentTable.tsx";
 import PaymentScheduleTable from "../financials/PaymentScheduleTable.tsx";
-import {LeaseStatus} from "../../utils/magicNumbers.jsx";
+import {LeaseStatus} from "../../utils/magicNumbers.js";
 import ExpensesTable from "../financials/ExpensesTable.tsx";
 
 

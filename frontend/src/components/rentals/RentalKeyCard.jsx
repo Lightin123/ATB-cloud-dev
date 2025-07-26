@@ -1,6 +1,6 @@
 import {Card, CardContent} from "../ui/card.tsx";
 import {Label} from "../ui/label.tsx";
-import {moneyParser} from "../../utils/formatters";
+import {moneyParser} from "../../utils/formatters.js";
 
 
 const RentalKeyCard = ({unit, isSingleUnit}) => {

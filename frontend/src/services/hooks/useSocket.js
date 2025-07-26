@@ -2,7 +2,7 @@
 import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addMessage } from "../slices/messageSlice";
+import { addMessage } from "../slices/messageSlice.js";
 
 const SOCKET_URL = import.meta.env.VITE_API_URL.replace(/^http/, 'ws');
 
@@ -12,6 +12,7 @@ export function useSocket() {
 
     useEffect(() => {
         const newSocket = io(SOCKET_URL, {
+            transports: ["websocket"],
             withCredentials: true,
             cors: { origin: import.meta.env.VITE_API_URL, credentials: true },
         });

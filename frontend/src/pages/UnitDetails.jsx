@@ -1,11 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetUnitQuery } from '../services/appApi';
+import { useGetUnitByIdQuery } from '../services/api/unitApi.js';
 import MaintenanceList from '../components/maintenance/MaintenanceList';
 
 export default function UnitDetails() {
   const { propertyId, unitId } = useParams();
-  const { data: unit, isLoading: uLoading } = useGetUnitQuery(unitId, { skip: !unitId });
+  const { data: unit, isLoading: uLoading } = useGetUnitByIdQuery(unitId);
   if (uLoading) return <div>Loading…</div>;
 
   return (

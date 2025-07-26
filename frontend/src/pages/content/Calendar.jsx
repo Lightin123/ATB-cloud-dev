@@ -3,10 +3,10 @@ import {useState} from "react";
 import {isAfter, nextSaturday, previousSunday} from "date-fns";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "../../components/ui/accordion.tsx";
 import {useSelector} from "react-redux";
-import {selectEventsByCategory, selectEventsForRange, selectFutureEvents} from "../../services/slices/eventSlice";
+import {selectEventsByCategory, selectEventsForRange, selectFutureEvents} from "../../services/slices/eventSlice.js";
 import {Banknote, Scroll} from "lucide-react";
 import {PiHandCoins} from "react-icons/pi";
-import {dateParser} from "../../utils/formatters";
+import {dateParser} from "../../utils/formatters.js";
 
 const Calendar = () => {
 

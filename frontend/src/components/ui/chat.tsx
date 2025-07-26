@@ -1,7 +1,7 @@
 import {Avatar, AvatarFallback, AvatarImage} from "./avatar.tsx";
 import {cn} from "../../utils.ts";
 import {format, formatDistanceToNow} from "date-fns";
-import {dateParser} from "../../utils/formatters";
+import {dateParser} from "../../utils/formatters.js";
 import React from "react";
 import {User} from "../../utils/classes.ts";
 

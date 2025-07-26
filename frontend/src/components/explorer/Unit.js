@@ -1,6 +1,6 @@
 import {cn} from "../../utils.ts";
-import PropertyStatus from "../properties/PropertyStatus.jsx";
-import {selectTenantByUnitId} from "../../services/slices/objectSlice";
+import PropertyStatus from "../properties/PropertyStatus.js";
+import {selectTenantByUnitId} from "../../services/slices/objectSlice.js";
 import {useSelector} from "react-redux";
 import {useEffect, useRef} from "react";
 

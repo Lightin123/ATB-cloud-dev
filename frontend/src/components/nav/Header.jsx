@@ -11,12 +11,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu.tsx";
-import {logoutUser} from "../../services/auth/authActions";
+import {logoutUser} from "../../services/auth/authActions.js";
 import {useNavigate} from "react-router-dom";
-import PropertySelection from "./PropertySelection.jsx";
+import PropertySelection from "./PropertySelection.js";
 
 const Header = () => {
-    const userProfile = useSelector(state => state.auth.userInfo)
+    const userProfile = useSelector(state => state.authSlice.userInfo)
     const navigate = useNavigate();
 
     return (

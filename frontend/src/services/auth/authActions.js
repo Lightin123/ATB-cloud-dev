@@ -1,4 +1,4 @@
-import {logout} from "./authSlice";
+import {logout} from "./authSlice.js";
 
 export function logoutUser() {
     logout();

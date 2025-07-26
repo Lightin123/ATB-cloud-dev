@@ -22,7 +22,7 @@ import {Checkbox} from "./checkbox.tsx";
 import {isAfter, isBefore, isSameDay} from "date-fns";
 import {cn} from "../../utils.ts";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "./accordion.tsx";
-import {dateParser} from "../../utils/formatters";
+import {dateParser} from "../../utils/formatters.js";
 
 
 

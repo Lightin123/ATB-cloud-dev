@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCreatePropertyMutation, useGetOwnersQuery } from '../services/appApi';
+import { useCreatePropertyMutation } from '../services/api/propertyApi.ts';
+import { useGetOwnersQuery } from '../services/api/ownerApi.js';
 
 export default function AddProperty() {
   const navigate = useNavigate();

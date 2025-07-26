@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {useLoginMutation} from "../../services/appApi";
+import {useLoginMutation} from "../../services/api/authApi.js";
 
 import {Card, CardContent, CardHeader} from "../ui/card.tsx";
 import {AiFillRocket} from "react-icons/ai";
@@ -44,19 +44,16 @@ const LoginCard = () => {
 
     const DemoAccountButton = () => {
         return (
-            <Button
-                variant="gradient"
-                className="absolute top-5"
-                isLoading={isLoading}
-                type="button"
-                onClick={() =>
-                    onSubmit({ email: "demo@account.com", password: "Demo123456" })
-                }
-            >
-                <KeyRound className="w-5 h-5 mr-2" />
-                {"Use Demo Account"}
+            <Button variant="gradient"
+                    className="absolute top-5"
+                    isLoading={isLoading}
+                    type="button" onClick={
+                () => onSubmit({email: "demo@account.com", password: "Demo123456"})
+            }>
+                <KeyRound className="w-5 h-5 mr-2"/>
+                Use Demo Account
             </Button>
-        );
+            )
     }
 
 

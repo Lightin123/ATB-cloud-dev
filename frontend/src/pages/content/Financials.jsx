@@ -4,10 +4,10 @@ import {
     selectExpensesByPropertyId,
     selectLeasesByPropertyId,
     selectPaymentsByPropertyId
-} from "../../services/slices/objectSlice";
+} from "../../services/slices/objectSlice.js";
 import InfoCard from "../../components/home/InfoCard.jsx";
 import {isAfter} from "date-fns";
-import {moneyParser} from "../../utils/formatters";
+import {moneyParser} from "../../utils/formatters.js";
 import PaymentScheduleTable from "../../components/financials/PaymentScheduleTable.tsx";
 import PaymentTable from "../../components/financials/PaymentTable.tsx";
 import {Button} from "../../components/ui/button.tsx";

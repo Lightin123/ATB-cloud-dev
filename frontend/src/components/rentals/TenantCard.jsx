@@ -1,15 +1,15 @@
 import {Card, CardContent, CardHeader, CardTitle} from "../ui/card.tsx";
 import {Avatar, AvatarFallback} from "../ui/avatar.tsx";
 import {Button} from "../ui/button.tsx";
-import {dateParser} from "../../utils/formatters";
+import {dateParser} from "../../utils/formatters.js";
 import {useNavigate, useParams} from "react-router-dom";
 import {Plus, UserIcon, UserRoundX, XIcon} from "lucide-react";
-import TenantSelection from "../comboboxes/TenantSelection.jsx";
+import TenantSelection from "../comboboxes/TenantSelection.js";
 import {useState} from "react";
 import {useSelector} from "react-redux";
-import {selectAllTenants} from "../../services/slices/objectSlice";
+import {selectAllTenants} from "../../services/slices/objectSlice.js";
 import {Checkbox} from "../ui/checkbox.tsx";
-import {useAssignTenantMutation} from "../../services/appApi";
+import {useAssignTenantMutation} from "../../services/api/unitApi.js";
 import {
     AlertDialog, AlertDialogAction, AlertDialogCancel,
     AlertDialogContent,

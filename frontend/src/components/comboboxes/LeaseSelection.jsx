@@ -4,9 +4,9 @@ import {Button} from "../ui/button.tsx";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "../ui/command.tsx";
 import {Check, ChevronDown} from "lucide-react";
 import {cn} from "../../utils.ts";
-import {dateParser, moneyParser} from "../../utils/formatters";
+import {dateParser, moneyParser} from "../../utils/formatters.js";
 import {PaymentScheduleStatusBadge} from "../../utils/statusBadges.jsx";
-import {getNextScheduledPayment} from "../../utils/financials";
+import {getNextScheduledPayment} from "../../utils/financials.js";
 
 
 const LeaseSelection = ({onSelect, selected, leases, isLoading, ...props}) => {

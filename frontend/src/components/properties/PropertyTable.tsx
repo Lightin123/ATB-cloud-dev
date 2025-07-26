@@ -5,8 +5,8 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, 
 import {Checkbox} from "../ui/checkbox.tsx";
 import {Button} from "../ui/button.tsx";
 import {MoreHorizontal} from "lucide-react";
-import {RealEstateType} from "../../utils/magicNumbers.jsx"
-import {dateParser, moneyParser} from "../../utils/formatters";
+import {RealEstateType} from "../../utils/magicNumbers.js"
+import {dateParser, moneyParser} from "../../utils/formatters.js";
 import {Property} from "../../utils/classes.ts";
 import {DataTable} from "../ui/data-table.jsx"
 

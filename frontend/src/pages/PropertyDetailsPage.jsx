@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  useGetPropertyQuery,
-  appApi,
-} from '../services/appApi';
+  useGetPropertyByIdQuery,
+  propertyApi,
+} from '../services/api/propertyApi.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGenerateOverwriteCodeMutation } from '../services/appApi';
+import { useGenerateOverwriteCodeMutation } from '../services/api/adminApi.js';
 import RentalUnitsTable from '../components/RentalUnitsTable.jsx';
 import {
   Dialog,
@@ -34,7 +34,7 @@ export default function PropertyDetailsPage() {
     data: property,
     isLoading,
     error,
-  } = useGetPropertyQuery(id, { skip: !id });
+  } = useGetPropertyByIdQuery(id, { skip: !id });
 
   useEffect(() => {
     if (editingOwner) {
@@ -53,12 +53,12 @@ export default function PropertyDetailsPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (!editingOwner) return;
-    await fetch(`${import.meta.env.VITE_API_URL}/api/users/${editingOwner.id}`, {
+    await fetch(`/api/users/${editingOwner.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
-    dispatch(appApi.util.invalidateTags([{ type: 'Properties', id: property.id }]));
+    dispatch(propertyApi.util.invalidateTags([{ type: 'Property', id: property.id }]));
     setEditingOwner(null);
   }
 

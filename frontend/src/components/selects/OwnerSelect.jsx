@@ -1,4 +1,4 @@
-import { useGetOwnersQuery } from '../../services/appApi';
+import { useGetOwnersQuery } from '../../services/api/ownerApi.js';
 
 export default function OwnerSelect({ value, onChange }) {
   const { data } = useGetOwnersQuery();

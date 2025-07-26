@@ -1,4 +1,4 @@
-import { useGetUnitsQuery } from '../../services/appApi';
+import { useGetUnitsQuery } from '../../services/api/unitApi.js';
 
 export default function UnitSelect({ value, onChange }) {
   const { data } = useGetUnitsQuery();

@@ -1,7 +1,7 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
-import { logoutUser } from '../auth/authActions';
-import { setAccessToken } from '../auth/authSlice';
+import { logoutUser } from '../auth/authActions.js';
+import { setAccessToken } from '../auth/authSlice.js';
 
 const mutex = new Mutex();
 

@@ -1,5 +1,6 @@
 import {createEntityAdapter, createSelector, createSlice} from '@reduxjs/toolkit';
-import { appApi } from '../appApi';
+import {authApi} from "../api/authApi.js";
+import { maintenanceApi } from "../api/maintenanceApi.js";
 
 const propertiesAdapter = createEntityAdapter({
     selectId: (property) => property.id,
@@ -34,13 +35,13 @@ const expensesAdapter = createEntityAdapter({
 })
 
 const initialState = {
-    properties: propertiesAdapter.getInitialState({ loading: false, error: null }),
-    units: unitsAdapter.getInitialState({ loading: false, error: null }),
-    leases: leasesAdapter.getInitialState({ loading: false, error: null }),
-    tenants: tenantsAdapter.getInitialState({ loading: false, error: null }),
-    payments: paymentsAdapter.getInitialState({ loading: false, error: null }),
-    maintenance: maintenanceAdapter.getInitialState({ loading: false, error: null }),
-    expenses: expensesAdapter.getInitialState({ loading: false, error: null }),
+    properties: propertiesAdapter.getInitialState(),
+    units: unitsAdapter.getInitialState(),
+    leases: leasesAdapter.getInitialState(),
+    tenants: tenantsAdapter.getInitialState(),
+    payments: paymentsAdapter.getInitialState(),
+    maintenance: maintenanceAdapter.getInitialState(),
+    expenses: expensesAdapter.getInitialState(),
 }
 
 
@@ -84,7 +85,7 @@ const propertySlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(
-                appApi.endpoints.getProperties.matchFulfilled,
+                authApi.endpoints.getProperties.matchFulfilled,
                 (state, action) => {
                     propertiesAdapter.setAll(state, action.payload.data);
                 }
@@ -116,7 +117,7 @@ const unitSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(
-                appApi.endpoints.getUnits.matchFulfilled,
+                authApi.endpoints.getUnits.matchFulfilled,
                 (state, action) => {
                     unitsAdapter.setAll(state, action.payload.data);
                 }
@@ -147,7 +148,7 @@ const leaseSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(
-                appApi.endpoints.getLeases.matchFulfilled,
+                authApi.endpoints.getLeases.matchFulfilled,
                 (state, action) => {
                     // If the originalArgs are not present, it means that the API call was made without any filters (so GET all leases)
                     if (!action.meta.arg.originalArgs){
@@ -181,7 +182,7 @@ const tenantSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(
-                appApi.endpoints.getTenants.matchFulfilled,
+                authApi.endpoints.getTenants.matchFulfilled,
                 (state, action) => {
                     tenantsAdapter.setAll(state, action.payload.data);
                 }
@@ -212,7 +213,7 @@ const paymentSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(
-                appApi.endpoints.getPayments.matchFulfilled,
+                authApi.endpoints.getPayments.matchFulfilled,
                 (state, action) => {
                     // If the originalArgs are not present, it means that the API call was made without any filters (so GET all leases)
                     if (!action.meta.arg.originalArgs){
@@ -246,7 +247,7 @@ const maintenanceSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(
-                appApi.endpoints.getMaintenance.matchFulfilled,
+                maintenanceApi.endpoints.getMaintenanceReports.matchFulfilled,
                 (state, action) => {
                     maintenanceAdapter.setAll(state, action.payload);
                 }
@@ -278,7 +279,7 @@ const expenseSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(
-                appApi.endpoints.getExpenses.matchFulfilled,
+                authApi.endpoints.getExpenses.matchFulfilled,
                 (state, action) => {
                     expensesAdapter.setAll(state, action.payload.data);
                 }
@@ -470,36 +471,32 @@ export const selectExpensesByUnitId = createSelector(
             return {...expense, unit: units.find(unit => unit.id === expense.unitId)};
         })
     })
-export const selectObjectById = createSelector(
-[selectAllProperties, selectAllUnits, selectAllLeases, selectAllTenants, selectAllPayments, selectAllMaintenanceReports, (_, id, type) => [id, type]],
-    (properties, units, leases, tenants, payments, maintenanceReports, data) => {
-        try {
-            const id = data[0];
-            const type = data[1];
-            if (!id) return null;
-            switch (type) {
-                case 'property':
-                    return properties.find(property => property.id === id);
-                case 'unit':
-                    return units.find(unit => unit.id === id);
-                case 'lease':
-                    return leases.find(lease => lease.id === id);
-                case 'tenant':
-                    return tenants.find(tenant => tenant.id === id);
-                case 'payment':
-                    return payments.find(payment => payment.id === id);
-                case 'maintenanceReport':
-                    return maintenanceReports.find(maintenanceReport => maintenanceReport.id === id);
-                default:
-                    return null;
-            }
-        } catch (e) {
+export const makeSelectObjectById = (id, type) => (state) => {
+    const properties = selectAllProperties(state);
+    const units = selectAllUnits(state);
+    const leases = selectAllLeases(state);
+    const tenants = selectAllTenants(state);
+    const payments = selectAllPayments(state);
+    const maintenanceReports = selectAllMaintenanceReports(state);
+
+    if (!id) return null;
+    switch (type) {
+        case 'property':
+            return properties.find(property => property.id === id);
+        case 'unit':
+            return units.find(unit => unit.id === id);
+        case 'lease':
+            return leases.find(lease => lease.id === id);
+        case 'tenant':
+            return tenants.find(tenant => tenant.id === id);
+        case 'payment':
+            return payments.find(payment => payment.id === id);
+        case 'maintenanceReport':
+            return maintenanceReports.find(maintenanceReport => maintenanceReport.id === id);
+        default:
             return null;
-        }
     }
-)
-
-
+};
 
 
 
@@ -635,38 +632,3 @@ export const selectUnitsByLeaseIds = createSelector(
         return units.filter(unit => leaseIds.includes(unit?.leases[0]?.id) && unit?.leases[0]?.id !== undefined);
     }
 )
-// ✅ Curried selector - dynamic, compatible with useSelector()
-export const makeSelectObjectById = (id, type) =>
-  createSelector(
-    [
-      selectAllProperties,
-      selectAllUnits,
-      selectAllLeases,
-      selectAllTenants,
-      selectAllPayments,
-      selectAllMaintenanceReports
-    ],
-    (properties, units, leases, tenants, payments, maintenanceReports) => {
-      try {
-        if (!id) return null;
-        switch (type) {
-          case 'property':
-            return properties.find(property => property.id === id);
-          case 'unit':
-            return units.find(unit => unit.id === id);
-          case 'lease':
-            return leases.find(lease => lease.id === id);
-          case 'tenant':
-            return tenants.find(tenant => tenant.id === id);
-          case 'payment':
-            return payments.find(payment => payment.id === id);
-          case 'maintenanceReport':
-            return maintenanceReports.find(m => m.id === id);
-          default:
-            return null;
-        }
-      } catch (e) {
-        return null;
-      }
-    }
-  );

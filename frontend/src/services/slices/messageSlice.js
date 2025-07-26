@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSelector, createSlice} from "@reduxjs/toolkit";
-import { appApi } from "../appApi";
-import {moneyParser} from "../../utils/formatters";
+import {authApi} from "../api/authApi.js";
+import {moneyParser} from "../../utils/formatters.js";
 
 const messageAdapter = createEntityAdapter({
     selectId: (message) => message.id,
@@ -8,8 +8,6 @@ const messageAdapter = createEntityAdapter({
 })
 
 const initialState = messageAdapter.getInitialState({
-    loading: false,
-    error: null,
 })
 
 
@@ -26,10 +24,10 @@ const messageSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addMatcher(
-            appApi.endpoints.getMessages.matchFulfilled,
+            authApi.endpoints.getMessages.matchFulfilled,
             (state,action) => {
                 const messages = action.payload.data;
-                messageAdapter.setAll(state, messages);
+                messageAdapter.addMany(state, messages);
             }
         )
     }

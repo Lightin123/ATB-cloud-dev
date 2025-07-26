@@ -4,13 +4,13 @@ import {
     selectPropertyById,
     selectUnitById,
     selectUnitByTenantId
-} from "../../services/slices/objectSlice";
+} from "../../services/slices/objectSlice.js";
 import {Image} from "../../components/ui/image.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "../../components/ui/avatar.tsx";
 import {Button} from "../../components/ui/button.tsx";
 import {FilePlus2, PencilIcon, SendIcon} from "lucide-react";
 import {Badge} from "../../components/ui/badge.tsx";
-import {dateParser} from "../../utils/formatters";
+import {dateParser} from "../../utils/formatters.js";
 import {Tabs, TabsContent, TabsList, TabsItem} from "../../components/ui/tabs-new.tsx";
 import EditTenant from "../../components/tenants/EditTenant.jsx";
 import LeaseHistory from "../../components/leases/LeaseHistory.tsx";

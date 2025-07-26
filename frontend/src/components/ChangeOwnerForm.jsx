@@ -14,7 +14,7 @@ import {
 import { Input } from "./ui/input.tsx";
 import { Button } from "./ui/button.tsx";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select.tsx";
-import { useGetOwnersQuery, useChangeUnitOwnerMutation } from "../services/appApi";
+import { useGetOwnersQuery, useChangeUnitOwnerMutation } from "../services/api/ownerApi.js";
 
 const schema = z.object({
     ownerId: z.string(),

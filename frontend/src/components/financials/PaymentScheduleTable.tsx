@@ -1,22 +1,21 @@
 import {
     ColumnDef,
 } from "@tanstack/react-table";
-import {dateParser, moneyParser} from "../../utils/formatters";
+import {dateParser, moneyParser} from "../../utils/formatters.js";
 import {DataTable} from "../ui/data-table.jsx";
 import {LeasePaymentSchedule} from "../../utils/classes.ts";
 import {CalendarClock, Check, Coins, Eye, MoreHorizontal, Pencil, Trash2} from "lucide-react";
 import ViewPayment from "../payments/ViewPayment.jsx";
 import {PaymentScheduleStatusBadge, PaymentStatusBadge} from "../../utils/statusBadges.jsx";
-import {LeaseStatus, PaymentScheduleStatus, PaymentStatus} from "../../utils/magicNumbers.jsx";
+import {LeaseStatus, PaymentScheduleStatus, PaymentStatus} from "../../utils/magicNumbers.js";
 import {useMemo, useState} from "react";
 import {
-    useCreatePaymentsMutation,
-    useUpdatePaymentSchedulesMutation,
-    useDeletePaymentSchedulesMutation
-} from "../../services/appApi";
+    useDeletePaymentScheduleMutation,
+    useUpdatePaymentScheduleMutation
+} from "../../services/api/financialsApi.js";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {leasePaymentScheduleSchema, paymentSchema} from "../../utils/formSchemas";
+import {leasePaymentScheduleSchema, paymentSchema} from "../../utils/formSchemas.js";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -31,6 +30,12 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../
 import {Button} from "../ui/button.tsx";
 import Link from "../general/Link.tsx";
 import DeleteDialog from "../general/DeleteDialog";
+import {
+    useCreatePaymentsMutation,
+    useDeleteLeasesMutation, useDeletePaymentSchedulesMutation,
+    useUpdateLeasesMutation,
+    useUpdatePaymentSchedulesMutation
+} from "../../services/api/bulkApi";
 import {Checkbox} from "../ui/checkbox.tsx";
 import {ButtonGroup, ButtonGroupItem} from "../ui/button-group.tsx";
 
@@ -39,8 +44,8 @@ const PaymentScheduleActions = ({ paymentSchedule }) => {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
     const [viewModalOpen, setViewModalOpen] = useState(false)
 
-    const [updatePaymentSchedules, {isLoading: isUpdating}] = useUpdatePaymentSchedulesMutation()
-    const [deletePaymentSchedules] = useDeletePaymentSchedulesMutation()
+    const [updatePaymentSchedule, {isLoading: isUpdating}] = useUpdatePaymentScheduleMutation()
+    const [deletePaymentSchedule] = useDeletePaymentScheduleMutation()
 
     const paymentScheduleForm = useForm({
         resolver: zodResolver(leasePaymentScheduleSchema),
@@ -50,13 +55,11 @@ const PaymentScheduleActions = ({ paymentSchedule }) => {
         }
     })
 
-    const handleSubmit = async (data) => {
-        try {
-            await updatePaymentSchedules({id: paymentSchedule?.id, body: data}).unwrap()
+    const handleSubmit = (data) => {
+        updatePaymentSchedule({id: paymentSchedule?.id, body: data}).then((res) => {
+            if (res.error) return
             setEditModalOpen(false)
-        } catch {
-            // TODO: show an error toast or leave blank
-        }
+        })
     }
 
     return (
@@ -157,13 +160,7 @@ const PaymentScheduleActions = ({ paymentSchedule }) => {
                 setOpen={setDeleteModalOpen}
                 title="Delete Planned Payment"
                 content="Are you sure you want to delete this planned payment? This action cannot be undone."
-                onConfirm={async () => {
-                    try {
-                        await deletePaymentSchedules(paymentSchedule?.id).unwrap()
-                    } catch {
-                        // TODO: show error feedback
-                    }
-                }}
+                onConfirm={() => deletePaymentSchedule(paymentSchedule?.id)}
             />
 
             {viewModalOpen && <ViewPayment open={viewModalOpen} setOpen={setViewModalOpen} payment={paymentSchedule} />}
@@ -372,12 +369,8 @@ const PaymentScheduleBulkActions = ({selectedRows}) => {
 
     }
 
-    const handleDelete = async () => {
-        try {
-            await deletePaymentSchedules(selectedRows).unwrap()
-        } catch {
-            // TODO: show error feedback
-        }
+    const handleDelete = () => {
+        deletePaymentSchedules(selectedRows);
     }
 
 

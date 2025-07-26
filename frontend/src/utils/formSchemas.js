@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {zodDateInputPipe, zodNumberInputPipe, zodStringPipe} from "./formatters";
+import {zodDateInputPipe, zodNumberInputPipe, zodStringPipe} from "./formatters.js";
 import {isValidPhoneNumber} from "react-phone-number-input";
 
 

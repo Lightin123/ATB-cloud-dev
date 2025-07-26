@@ -9,7 +9,7 @@ import {
     } from "../ui/dialog.tsx";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
-import {unitSchema} from "../../utils/formSchemas";
+import {unitSchema} from "../../utils/formSchemas.js";
 import {
     Form,
     FormControl,
@@ -23,9 +23,9 @@ import {
 import {Building} from "lucide-react";
 import {Input} from "../ui/input.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
-import {ListingStatus} from "../../utils/magicNumbers.jsx";
+import {ListingStatus} from "../../utils/magicNumbers.js";
 import {Button} from "../ui/button.tsx";
-import {useUpdateUnitMutation} from "../../services/appApi";
+import {useUpdateUnitMutation} from "../../services/api/unitApi.js";
 
 
 const EditRentalUnit = ({unit, open, setOpen, ...props}) => {

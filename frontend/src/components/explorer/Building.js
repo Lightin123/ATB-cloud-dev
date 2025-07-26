@@ -1,4 +1,4 @@
-import Unit from "./Unit.jsx";
+import Unit from "./Unit.js";
 
 
 const Building = ({ property,  selectedUnit, onSelectUnit }) => {

@@ -15,7 +15,8 @@ import {
     Upload
 } from "lucide-react";
 import { useSelector} from "react-redux";
-import {usePrefetch, useGetUserQuery} from "../../services/appApi";
+import {usePrefetch} from "../../services/api/authApi.js"
+import {useGetUserQuery} from "../../services/api/userApi.js";
 
 const items = [
     {
@@ -90,7 +91,7 @@ const items = [
 const Navbar = ({children}) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const authSlice = useSelector(state => state.auth);
+    const authSlice = useSelector(state => state.authSlice);
     const userRole = authSlice.userInfo?.role;
 
     const {isLoading: userIsLoading} = useGetUserQuery();
@@ -103,7 +104,7 @@ const Navbar = ({children}) => {
     const prefetchLeases = usePrefetch("getLeases")
     const prefetchPayments = usePrefetch("getPayments")
     const prefetchMessages = usePrefetch("getMessages")
-    const prefetchMaintenance = usePrefetch("getMaintenance")
+    const prefetchMaintenance = usePrefetch("getMaintenanceReports")
     const prefetchExpenses = usePrefetch("getExpenses")
 
     prefetchUser();

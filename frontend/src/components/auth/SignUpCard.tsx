@@ -1,12 +1,12 @@
 import React from 'react'
-import { useForm, FormProvider, Controller } from 'react-hook-form'
+import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import AsyncSelect from 'react-select/async'
-import type { SingleValue, OnChangeValue } from 'react-select'
+import type { MultiValue, SingleValue } from 'react-select'
 import { z } from 'zod'
 import { useNavigate } from 'react-router-dom'
 
-import { useRegisterMutation, useLoginMutation } from '../../services/appApi'
+import { useRegisterMutation, useLoginMutation } from '../../services/api/authApi.js'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card.tsx'
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '../ui/form.tsx'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group.tsx'
@@ -60,6 +60,7 @@ const signUpFormSchema = z.object({
 })
 
 export type SignUpValues = z.infer<typeof signUpFormSchema>
+type OptionType = { label: string; value: string }
 
 export const SignUpCard = () => {
   const navigate = useNavigate()
@@ -79,9 +80,6 @@ export const SignUpCard = () => {
       code: ''
     }
   })
-
-  // watch role to conditionally render owner-specific fields
-
 
   const onSubmit = async (values: SignUpValues) => {
     const payload = {
@@ -176,22 +174,19 @@ export const SignUpCard = () => {
                       <FormItem>
                         <FormLabel>Property</FormLabel>
                         <FormControl>
-                          <AsyncSelect
+                          <AsyncSelect<OptionType, false>
                             cacheOptions
                             defaultOptions
-                            isMulti={false}
                             loadOptions={async input => {
-                              const res = await fetch(`${import.meta.env.VITE_API_URL}/api/properties${input ? '?search=' + input : ''}`)
+                              const res = await fetch(`/api/properties${input ? '?search=' + input : ''}`)
                               const json = await res.json()
                               const list = Array.isArray(json.data) ? json.data : json
-                              return list.map(p => ({
+                              return list.map((p: any) => ({
                                 label: p.title ?? p.name ?? p.street,
                                 value: p.id.toString(),
                               }))
                             }}
-                            onChange={(opt: SingleValue<{label:string; value:string}>) => {
-                              field.onChange(opt?.value ?? '')
-                            }}
+                            onChange={opt => field.onChange(opt?.value || '')}
                             value={field.value ? { label: '…', value: field.value } : null}
                             placeholder="Search properties..."
                           />
@@ -207,29 +202,38 @@ export const SignUpCard = () => {
                     name="unitIds"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Unit{methods.watch('role')==='OWNER'?'s':''}</FormLabel>
+                        <FormLabel>Unit{methods.watch('role') === 'OWNER' ? 's' : ''}</FormLabel>
                         <FormControl>
-                          <AsyncSelect
+                          <AsyncSelect<OptionType, boolean>
                             cacheOptions
                             defaultOptions
                             isMulti={methods.watch('role') === 'OWNER'}
                             loadOptions={async () => {
                               const pid = methods.watch('propertyId')
-                              const res = await fetch(`${import.meta.env.VITE_API_URL}/api/properties/${pid}/units`)
+                              const res = await fetch(`/api/properties/${pid}/units`)
                               const json = await res.json()
                               const list = Array.isArray(json.data) ? json.data : json
-                              return list.map(u => ({
+                              return list.map((u: any) => ({
                                 label: u.unitNumber ?? u.name ?? u.unitIdentifier,
                                 value: u.id.toString(),
                               }))
                             }}
-                            onChange={(opts: OnChangeValue<{label:string; value:string}, boolean>) => {
-                              const vals = Array.isArray(opts) ? opts.map(o => o.value) : [(opts as {value:string}).value]
-                              field.onChange(vals)
+                            onChange={(
+                              opts: MultiValue<OptionType> | SingleValue<OptionType> | null
+                            ) => {
+                              let vals: string[] = [];
+                              if (Array.isArray(opts)) {
+                                vals = opts
+                                  .filter(o => o && typeof o === 'object' && 'value' in o)
+                                  .map(o => (o as { value: string }).value);
+                              } else if (opts && typeof opts === 'object' && 'value' in opts) {
+                                vals = [(opts as { value: string }).value];
+                              }
+                              field.onChange(vals);
                             }}
                             value={
                               Array.isArray(field.value)
-                                ? field.value.map(v => ({ label: '…', value: v }))
+                                ? field.value.map((v: string) => ({ label: '…', value: v }))
                                 : []
                             }
                             placeholder="Search units..."
@@ -271,8 +275,8 @@ export const SignUpCard = () => {
                   )}
                 </div>
 
-                <Button type="submit" className="w-full mt-4">
-                  Sign Up
+                <Button type="submit" className="w-full mt-4" disabled={isLoading || loginLoading}>
+                  {isLoading || loginLoading ? 'Signing Up...' : 'Sign Up'}
                 </Button>
 
               </form>

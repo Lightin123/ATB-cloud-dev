@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {Button} from "../../components/ui/button.tsx";
 import {Plus, PlusIcon} from "lucide-react";
 import RentalTable from "../../components/rentals/RentalTable.tsx";
-import {selectAllTenants, selectTenantByLeaseId, selectUnitsByPropertyId} from "../../services/slices/objectSlice";
+import {selectAllTenants, selectTenantByLeaseId, selectUnitsByPropertyId} from "../../services/slices/objectSlice.js";
 
 
 const Rentals = (props) => {

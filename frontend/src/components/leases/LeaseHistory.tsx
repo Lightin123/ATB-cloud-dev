@@ -1,9 +1,9 @@
-import {dateParser, moneyParser} from "../../utils/formatters";
+import {dateParser, moneyParser} from "../../utils/formatters.js";
 import {DataTable} from "../ui/data-table.jsx";
 import {ColumnDef} from "@tanstack/react-table";
 import {Lease} from "../../utils/classes.ts";
 import { Scroll} from "lucide-react";
-import {PaymentFrequency} from "../../utils/magicNumbers.jsx";
+import {PaymentFrequency} from "../../utils/magicNumbers.js";
 import {LeaseStatusBadge} from "../../utils/statusBadges.jsx";
 import Link from "../general/Link.tsx";
 

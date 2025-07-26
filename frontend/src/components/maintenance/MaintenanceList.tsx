@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
-import { useGetMaintenanceQuery } from '../../services/appApi';
-import { MaintenanceStatus, Priority } from '../../utils/magicNumbers.jsx';
-import { dateParser } from '../../utils/formatters';
+import { useGetMaintenanceReportsQuery } from '../../services/api/maintenanceApi.js';
+import { MaintenanceStatus, Priority } from '../../utils/magicNumbers.js';
+import { dateParser } from '../../utils/formatters.js';
 import { MaintenanceStatusBadge, PriorityBadge } from '../../utils/statusBadges';
 import { DataTable } from '../ui/data-table.jsx';
 import Link from '../general/Link.tsx';
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function MaintenanceList({ unitId, onEdit, onDelete }: Props) {
-  const { data: reports = [], isLoading, isError, error } = useGetMaintenanceQuery(unitId);
+  const { data: reports = [], isLoading, isError, error } = useGetMaintenanceReportsQuery(unitId);
 
   const columns: ColumnDef<MaintenanceRequest>[] = useMemo(() => {
     const base: ColumnDef<MaintenanceRequest>[] = [
@@ -87,20 +87,19 @@ export default function MaintenanceList({ unitId, onEdit, onDelete }: Props) {
         enableGlobalFilter: true,
         filterFn: 'includesString',
       },
-{
-  id: 'owner',
-  header: 'Owner',
-  accessorFn: (report: any) => {
-    const owners = (report.unit as any)?.owners || [];
-    return owners.map((o: any) => `${o.firstName} ${o.lastName}`).join(', ');
-  },
-  cell: ({ row }) => {
-    const owners: any[] = (row.original as any).unit?.owners || [];
-    return owners.map(o => `${o.firstName} ${o.lastName}`).join(', ');
-  },
-  enableSorting: false,
-},
-
+      {
+        id: 'owner',
+        header: 'Owner',
+        accessorFn: (report: any) => {
+          const owners = report.unit?.owners || [];
+          return owners.map((o: any) => `${o.firstName} ${o.lastName}`).join(', ');
+        },
+        cell: ({ row }) => {
+          const owners: any[] = (row.original as any).unit?.owners || [];
+          return owners.map(o => `${o.firstName} ${o.lastName}`).join(', ');
+        },
+        enableSorting: false,
+      },
       {
         id: 'tenant',
         header: 'Tenant',

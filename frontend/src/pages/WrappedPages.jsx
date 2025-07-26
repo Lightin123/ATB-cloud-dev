@@ -1,4 +1,4 @@
-import {useGetPropertiesQuery, useGetPropertyQuery, useGetUnitQuery, useGetUnitsQuery, useGetTenantQuery, useGetTenantsQuery, useGetLeasesQuery, useGetUserQuery, useGetMessagesQuery} from "../services/appApi";
+import {useGetPropertiesQuery, useGetPropertyQuery} from "../services/api/propertyApi.ts";
 import PageWrapper from "./PageWrapper.jsx";
 import Properties from "./content/Properties.jsx";
 import Home from "./content/Home.jsx";
@@ -7,15 +7,20 @@ import {useParams} from "react-router-dom";
 import Tenants from "./content/Tenants.jsx";
 import Rentals from "./content/Rentals.jsx";
 import RentalDetail from "./content/RentalDetail.jsx";
+import {useGetUnitQuery, useGetUnitsQuery} from "../services/api/unitApi.js";
+import {useGetTenantQuery, useGetTenantsQuery} from "../services/api/tenantApi.js";
+import {useGetLeasesQuery} from "../services/api/leaseApi.js";
 import Financials from "./content/Financials.jsx";
 import Calendar from "./content/Calendar.jsx";
 import TenantProfile from "./content/TenantProfile.jsx";
 import Explorer from "./content/Explorer.jsx";
 import PropertyCreation from "./content/PropertyCreation.jsx";
 import TenantCreation from "./content/TenantCreation.jsx";
+import {useGetUserQuery} from "../services/api/userApi.js";
 import Account from "./content/Account.jsx";
 import Messages from "./content/Messages.jsx";
-import MaintenancePageContent from "./Maintenance.tsx";
+import {useGetMessagesQuery} from "../services/api/messageApi.js";
+import MaintenanceReports from "./content/Maintenance.jsx";
 
 export const AccountPage = () => {
     return (
@@ -135,7 +140,7 @@ export const MessagesPage = () => {
 export const MaintenancePage = () => {
     return (
         <PageWrapper>
-            <MaintenancePageContent/>
+            <MaintenanceReports/>
         </PageWrapper>
     )
 }

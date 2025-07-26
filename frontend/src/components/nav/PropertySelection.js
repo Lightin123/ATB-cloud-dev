@@ -1,21 +1,21 @@
 import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "../ui/select.tsx";
-import {useGetPropertiesQuery} from "../../services/appApi";
+import {useGetPropertiesQuery} from "../../services/api/propertyApi.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {selectProperty} from "../../services/slices/userSlice";
-import {getRealEstateIcon, RealEstateType} from "../../utils/magicNumbers.jsx";
-import {selectPropertyById} from "../../services/slices/objectSlice";
+import {selectProperty} from "../../services/slices/userSlice.js";
+import {getRealEstateIcon, RealEstateType} from "../../utils/magicNumbers.js";
+import {selectPropertyById} from "../../services/slices/objectSlice.js";
 import {DeleteIcon, Eye, MoreVertical} from "lucide-react";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "../ui/dropdown-menu.tsx";
 import {Dialog, DialogContent, DialogHeader} from "../ui/dialog.tsx";
 import {useState} from "react";
-import {dateParser} from "../../utils/formatters";
+import {dateParser} from "../../utils/formatters.js";
 
 const PropertySelection = () => {
     const {data, isLoading, isSuccess} = useGetPropertiesQuery();
 
     const dispatch = useDispatch();
 
-    const selection = useSelector(state => state.user.selectedProperty);
+    const selection = useSelector(state => state.userSlice.selectedProperty);
 
     // Will be null if no property (all) is selected
     const property = useSelector(state => selectPropertyById(state, selection));

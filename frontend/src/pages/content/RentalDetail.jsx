@@ -2,14 +2,14 @@ import {useParams} from "react-router-dom";
 import RentalKeyCard from "../../components/rentals/RentalKeyCard.jsx";
 import {Label} from "../../components/ui/label.tsx";
 import {BathIcon, BedIcon, CarFront, FilePlus2, LandPlot} from "lucide-react";
-import {dateParser, numberToLiteral} from "../../utils/formatters";
+import {dateParser, numberToLiteral} from "../../utils/formatters.js";
 import TenantCard from "../../components/rentals/TenantCard.jsx";
 import {useSelector} from "react-redux";
 import {
     selectExpensesByUnitId,
     selectPropertyByUnitId,
     selectTenantById
-} from "../../services/slices/objectSlice";
+} from "../../services/slices/objectSlice.js";
 import LeaseHistory from "../../components/leases/LeaseHistory.tsx";
 import {Button} from "../../components/ui/button.tsx";
 import AddLease from "../../components/leases/AddLease.jsx";

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useUpdateMaintenanceReportMutation } from '../services/appApi';
+import { usePatchMaintenanceReportMutation } from '../services/api/maintenanceApi';
 import UnitSelect from '../components/selects/UnitSelect.jsx';
 import OwnerSelect from '../components/selects/OwnerSelect.jsx';
 import TenantSelect from '../components/selects/TenantSelect.jsx';
@@ -9,7 +9,7 @@ import { MaintenanceStatusBadge } from '../utils/statusBadges.jsx';
 export default function AdminMaintenance({ reports }) {
   const role = useSelector(s => s.authSlice.userInfo?.role);
   const editable = role === 'ADMIN';
-  const [patch] = useUpdateMaintenanceReportMutation();
+  const [patch] = usePatchMaintenanceReportMutation();
 
   const update = (id, patchObj) => patch({ id, ...patchObj });
 

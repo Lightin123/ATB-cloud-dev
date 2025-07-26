@@ -1,13 +1,9 @@
 import { CheckIcon, ChevronsUpDown } from "lucide-react";
-
 import * as React from "react";
-
 import * as RPNInput from "react-phone-number-input";
-type E164Number = string;
-
 import flags from "react-phone-number-input/flags";
 
-import { Button } from "./button.tsx"
+import { Button } from "./button.tsx";
 import {
     Command,
     CommandEmpty,
@@ -15,24 +11,25 @@ import {
     CommandInput,
     CommandItem,
     CommandList,
-} from "./command.tsx"
-import { Input, InputProps } from "./input.tsx"
+} from "./command.tsx";
+import { Input, InputProps } from "./input.tsx";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "./popover.tsx"
+} from "./popover.tsx";
 
-import {cn} from "../../utils.ts";
+import { cn } from "../../utils.ts";
 
+// Omit onChange/value to redefine them
 type PhoneInputProps = Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
     "onChange" | "value"
 > &
     Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
-    onChange: (value: RPNInput.Value) => void;
-    value: RPNInput.Value;
-};
+        onChange: (value: RPNInput.Value) => void;
+        value: RPNInput.Value;
+    };
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
     React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
@@ -45,20 +42,14 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
                 inputComponent={InputComponent}
                 /**
                  * Handles the onChange event.
-                 *
                  * react-phone-number-input might trigger the onChange event as undefined
-                 * when a valid phone number is not entered. To prevent this,
-                 * the value is coerced to an empty string.
-                 *
-                 * @param {E164Number | undefined} value - The entered value
+                 * when a valid phone number is not entered. To prevent type errors,
+                 * just pass value or undefined—do NOT use "".
                  */
-                onChange={(value) => {
-                    const e164: E164Number | undefined = value || undefined;
-                    onChange(e164 as unknown as RPNInput.Value);
-                }}
+                onChange={onChange}
                 {...props}
             />
-        ),
+        )
     );
 PhoneInput.displayName = "PhoneInput";
 
@@ -69,7 +60,7 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
             {...props}
             ref={ref}
         />
-    ),
+    )
 );
 InputComponent.displayName = "InputComponent";
 
@@ -83,16 +74,16 @@ type CountrySelectProps = {
 };
 
 const CountrySelect = ({
-                           disabled,
-                           value,
-                           onChange,
-                           options,
-                       }: CountrySelectProps) => {
+    disabled,
+    value,
+    onChange,
+    options,
+}: CountrySelectProps) => {
     const handleSelect = React.useCallback(
         (country: RPNInput.Country) => {
             onChange(country);
         },
-        [onChange],
+        [onChange]
     );
 
     return (
@@ -101,13 +92,16 @@ const CountrySelect = ({
                 <Button
                     type="button"
                     variant={"outline"}
-                    className={cn("flex gap-1 border border-input rounded-e-none rounded-s-lg pr-1 pl-3")}
-                    disabled={disabled}>
+                    className={cn(
+                        "flex gap-1 border border-input rounded-e-none rounded-s-lg pr-1 pl-3"
+                    )}
+                    disabled={disabled}
+                >
                     <FlagComponent country={value} countryName={value} />
                     <ChevronsUpDown
                         className={cn(
                             "h-4 w-4 opacity-50",
-                            disabled ? "hidden" : "opacity-100",
+                            disabled ? "hidden" : "opacity-100"
                         )}
                     />
                 </Button>
@@ -124,21 +118,26 @@ const CountrySelect = ({
                                     <CommandItem
                                         className="gap-2"
                                         key={option.value}
-                                        onSelect={() => handleSelect(option.value)}>
+                                        onSelect={() => handleSelect(option.value)}
+                                    >
                                         <FlagComponent
                                             country={option.value}
                                             countryName={option.label}
                                         />
-                                        <span className="text-sm flex-1">{option.label}</span>
+                                        <span className="text-sm flex-1">
+                                            {option.label}
+                                        </span>
                                         {option.value && (
                                             <span className="text-sm text-foreground/50">
-                        {`+${RPNInput.getCountryCallingCode(option.value)}`}
-                      </span>
+                                                {`+${RPNInput.getCountryCallingCode(option.value)}`}
+                                            </span>
                                         )}
                                         <CheckIcon
                                             className={cn(
                                                 "ml-auto h-4 w-4",
-                                                option.value === value ? "opacity-100" : "opacity-0",
+                                                option.value === value
+                                                    ? "opacity-100"
+                                                    : "opacity-0"
                                             )}
                                         />
                                     </CommandItem>
@@ -153,11 +152,10 @@ const CountrySelect = ({
 
 const FlagComponent = ({ country, countryName }: RPNInput.FlagProps) => {
     const Flag = flags[country];
-
     return (
         <span className="flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20">
-      {Flag && <Flag title={countryName} />}
-    </span>
+            {Flag && <Flag title={countryName} />}
+        </span>
     );
 };
 FlagComponent.displayName = "FlagComponent";

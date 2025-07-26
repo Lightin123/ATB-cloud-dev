@@ -6,10 +6,12 @@ import { Input } from '../components/ui/input.tsx';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select.tsx';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table.tsx';
 import { Button } from '../components/ui/button.tsx';
-import { useCreatePropertyMutation, useGetOwnersQuery, useGetTenantsQuery } from '../services/appApi';
+import { useCreatePropertyMutation } from '../services/api/propertyApi.ts';
+import { useGetOwnersQuery } from '../services/api/ownerApi.js';
+import { useGetTenantsQuery } from '../services/api/tenantApi.js';
 
 export default function NewProperty() {
-  const role = useSelector(state => state.auth.userInfo?.role);
+  const role = useSelector(state => state.authSlice.userInfo?.role);
   const navigate = useNavigate();
   const { data: ownersData } = useGetOwnersQuery();
   const { data: tenantsData } = useGetTenantsQuery();

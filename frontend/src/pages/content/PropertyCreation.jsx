@@ -15,13 +15,13 @@ import {
 } from "lucide-react";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {propertySchema} from "../../utils/formSchemas";
+import {propertySchema} from "../../utils/formSchemas.js";
 import {Form, FormControl, FormField, FormGroup, FormItem, FormLabel, FormMessage} from "../../components/ui/form.tsx";
 import {Card, CardContent, CardHeader, CardTitle} from "../../components/ui/card.tsx";
 import {Input} from "../../components/ui/input.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../../components/ui/select.tsx";
-import {getRealEstateIcon, ListingStatus} from "../../utils/magicNumbers.jsx";
-import {RealEstateType} from "../../utils/magicNumbers.jsx";
+import {getRealEstateIcon, ListingStatus} from "../../utils/magicNumbers.js";
+import {RealEstateType} from "../../utils/magicNumbers.js";
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "../../components/ui/carousel.tsx";
 import {Button} from "../../components/ui/button.tsx";
 import {
@@ -33,16 +33,16 @@ import {
     DialogTrigger
 } from "../../components/ui/dialog.tsx";
 import UnitCreationTable from "../../components/properties/UnitCreationTable.jsx";
-import {useCreatePropertyMutation} from "../../services/appApi";
+import {useCreatePropertyMutation} from "../../services/api/propertyApi.ts";
 import {Navigate, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {Progress} from "../../components/ui/multi-step.jsx";
+import {Progress} from "../../components/ui/multi-step.js";
 
 
 const PropertyCreation = () => {
 
     const navigate = useNavigate();
-    const userRole = useSelector(state => state.auth.userInfo?.role);
+    const userRole = useSelector(state => state.authSlice.userInfo?.role);
 
     if (userRole !== 'ADMIN') return <Navigate to="/unauthorized" />;
 

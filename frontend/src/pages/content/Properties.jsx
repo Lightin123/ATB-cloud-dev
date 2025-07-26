@@ -2,7 +2,7 @@ import PropertyTable from "../../components/properties/PropertyTable.tsx";
 import DetailedPropertyTable from "../../components/properties/DetailedPropertyTable.jsx";
 import {Button} from "../../components/ui/button.tsx";
 import {useState} from "react";
-import {selectPropertiesByPropertyId} from "../../services/slices/objectSlice";
+import {selectPropertiesByPropertyId} from "../../services/slices/objectSlice.js";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {Plus} from "lucide-react";
@@ -15,7 +15,7 @@ const Properties = (props) => {
     const navigate = useNavigate()
 
     const properties = useSelector(state => selectPropertiesByPropertyId(state, propertySelection));
-    const userRole = useSelector(state => state.auth.userInfo?.role)
+    const userRole = useSelector(state => state.authSlice.userInfo?.role)
 
     const ViewSelection = () => {
         return (

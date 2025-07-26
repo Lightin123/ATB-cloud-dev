@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {logoutUser} from "./authActions";
-import {setAccessToken} from "./authSlice";
-import { useRefreshQuery } from "../appApi";
+import {logoutUser} from "./authActions.js";
+import {setAccessToken} from "./authSlice.js";
+import {useRefreshMutation} from "../api/authApi.js";
 
 const parseJwt = (token) => {
     try {
@@ -13,11 +13,11 @@ const parseJwt = (token) => {
 };
 
 const AuthVerify = () => {
-    const state = useSelector((state) => state.auth);
+    const state = useSelector((state) => state.authSlice);
     const accessToken = state.accessToken;
     const dispatch = useDispatch();
     const refreshToken = localStorage.getItem("refreshToken")
-    const { refetch: refresh, isFetching: isRefreshing } = useRefreshQuery(undefined, { skip: true });
+    const [refresh, {isLoading: isRefreshing}] = useRefreshMutation();
 
     useEffect(() => {
         if (accessToken && refreshToken) {
@@ -41,7 +41,7 @@ const AuthVerify = () => {
                 logoutUser(state);
             }
         }
-    }, [accessToken, refreshToken, dispatch, refresh, isRefreshing]);
+    }, [accessToken, refreshToken, dispatch]);
 
 
     /*

@@ -1,6 +1,6 @@
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "../../components/ui/table.tsx";
 import {Button} from "../../components/ui/button.tsx";
-import {useDeletePropertyMutation} from "../../services/appApi";
+import {useDeletePropertyMutation} from "../../services/api/propertyApi.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 
@@ -11,7 +11,7 @@ const PropertyDetail = (props) => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const userRole = useSelector(state => state.auth.userInfo?.role);
+    const userRole = useSelector(state => state.authSlice.userInfo?.role);
 
     const [deleteProperty, {isLoading: isDeleting}] = useDeletePropertyMutation();
 

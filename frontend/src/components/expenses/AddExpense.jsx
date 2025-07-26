@@ -1,10 +1,10 @@
 import {useState} from "react";
-import {useGetUnitsQuery} from "../../services/appApi";
+import {useGetUnitsQuery} from "../../services/api/unitApi.js";
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogIcon, DialogTitle} from "../ui/dialog.tsx";
 import {Button} from "../ui/button.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {expenseSchema} from "../../utils/formSchemas";
+import {expenseSchema} from "../../utils/formSchemas.js";
 import {
     Form,
     FormControl,
@@ -19,7 +19,8 @@ import {Textarea} from "../ui/textarea.tsx";
 import LeaseSelection from "../comboboxes/LeaseSelection.jsx";
 import {ExternalLink, FilePlus2, Plus} from "lucide-react";
 import RentalSelection from "../comboboxes/RentalSelection.jsx";
-import {useGetLeasesQuery, useCreateExpenseMutation} from "../../services/appApi";
+import {useGetLeasesQuery} from "../../services/api/leaseApi.js";
+import {useCreateExpenseMutation} from "../../services/api/financialsApi.js";
 
 
 const AddExpense = (props) => {

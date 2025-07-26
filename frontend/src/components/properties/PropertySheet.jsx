@@ -4,10 +4,10 @@ import {Label} from "../ui/label.tsx";
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "../ui/carousel.tsx";
 import {Image} from "../ui/image.tsx";
 import {Tabs, TabsContent, TabsList, TabsItem} from "../ui/tabs-new.tsx";
-import {dateParser, moneyParser} from "../../utils/formatters";
-import {RealEstateType} from "../../utils/magicNumbers.jsx";
+import {dateParser, moneyParser} from "../../utils/formatters.js";
+import {RealEstateType} from "../../utils/magicNumbers.js";
 import RentalTable from "../rentals/RentalTable.tsx";
-import {selectUnitsByPropertyId} from "../../services/slices/objectSlice";
+import {selectUnitsByPropertyId} from "../../services/slices/objectSlice.js";
 import {useSelector} from "react-redux";
 import {Building2} from "lucide-react";
 

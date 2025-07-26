@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { DataTable } from './ui/data-table.jsx';
 import { ListingStatusBadge } from '../utils/statusBadges.jsx';
-import { dateParser, moneyParser } from '../utils/formatters';
+import { dateParser, moneyParser } from '../utils/formatters.js';
 import AppLink from './general/Link.tsx';
 import EditRentalUnit from './rentals/EditRentalUnit';
 import { Button } from './ui/button.tsx';
@@ -97,7 +97,7 @@ const buildColumns = (showPropertyColumn, setEditingOwner) => {
       cell: ({ row }) => {
         const t = row.original.tenant;
         if (t?.user) {
-          return `${t.user?.firstName} ${t.user?.lastName}`;
+          return `${t.user.firstName} ${t.user.lastName}`;
         }
         if (t?.firstName) {
           return `${t.firstName} ${t.lastName}`;
@@ -107,7 +107,7 @@ const buildColumns = (showPropertyColumn, setEditingOwner) => {
       meta: { type: 'string' },
       accessorFn: row => {
         const t = row.tenant;
-        if (t?.user) return `${t.user?.firstName} ${t.user?.lastName}`;
+        if (t?.user) return `${t.user.firstName} ${t.user.lastName}`;
         if (t?.firstName) return `${t.firstName} ${t.lastName}`;
         return '';
       },
